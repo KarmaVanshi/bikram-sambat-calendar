@@ -46,29 +46,4 @@ python3 scrape_bs_calendar.py --year-start 2081 --year-end 2093 -o bikram_sambat
 labels (day numbers on non-header days follow the same choice). `--extend`
 is the self-update mode: it reads the year range already in an existing
 output file, keeps the same start year, and grows the end year by 1 if
-hamropatro.com has published a new one — this is what the scheduled job
-below runs.
-
-## Auto-update
-
-**hamropatro.com's CDN blocks GitHub Actions' IP range with HTTP 403 on
-every request** (confirmed 2026-08-21 — a full scheduled run failed
-end-to-end, then the identical code succeeded immediately from a local
-Mac). So the scraping step can't run on GitHub's infrastructure; it runs
-locally instead, from a macOS LaunchAgent, while GitHub still hosts the
-resulting `.ics` file that all subscriptions actually read from.
-
-- **LaunchAgent:** `~/Library/LaunchAgents/com.rakesh.bs-calendar-update.plist`
-  — runs every 7 days (`StartInterval`).
-- **Working copy it operates on:**
-  `~/Library/Application Support/bikram-sambat-calendar` — a separate clone
-  from whatever you're looking at in `~/Desktop/Calendar` right now, so
-  deleting the Desktop copy doesn't affect it.
-- **Self-healing:** the job's logic is inlined directly in the plist (not a
-  separate script file), and it re-clones the repo from scratch if the
-  working copy is missing or damaged. It also `git pull --rebase`s before
-  every run, so it always uses the latest version of
-  `scrape_bs_calendar.py` regardless of where that update was pushed from.
-- Logs: `~/Library/Logs/bs-calendar-update.log`
-
-Manually trigger a run: `launchctl start com.rakesh.bs-calendar-update`
+hamropatro.com has published a new one.
