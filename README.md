@@ -72,21 +72,3 @@ resulting `.ics` file that all subscriptions actually read from.
 - Logs: `~/Library/Logs/bs-calendar-update.log`
 
 Manually trigger a run: `launchctl start com.rakesh.bs-calendar-update`
-
-### What survives losing this Mac
-
-The GitHub repo and the hosted `.ics` are unaffected — existing
-subscriptions keep working indefinitely. Only the auto-extend behavior
-stops; the calendar just freezes at whatever B.S. year it last reached
-(currently far enough out that this isn't practically urgent). To resume
-auto-updates on a different machine, reproduce the LaunchAgent setup above
-there.
-
-## Files
-
-- `scrape_bs_calendar.py` — scraper + `.ics` generator
-- `bikram_sambat_calendar.ics` — the generated calendar (what's hosted)
-- `update_and_push.sh` — standalone version of the update logic, for manual
-  runs; the actual scheduled job runs its own inlined copy from the plist,
-  not this file, so deleting this file doesn't affect automation
-- `.gitignore` — excludes `__pycache__/`, `*.pyc`, `.cache/`, `graphify-out/`
