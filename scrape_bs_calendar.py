@@ -170,11 +170,16 @@ def to_devanagari_numerals(n: int) -> str:
 
 
 def label_for(rec: dict, lang: str) -> str:
-    en = f"{rec['day_bs']} {rec['month_name_en']} {rec['year_bs']}"
-    np = (
-        f"{to_devanagari_numerals(rec['day_bs'])} "
-        f"{rec['month_name_np']} {to_devanagari_numerals(rec['year_bs'])}"
-    )
+    """Month name + year on the 1st of each B.S. month; just the day number
+    on every other day (so a day-by-day agenda view reads like a wall
+    calendar: a month header, then bare day numbers until the next one)."""
+    is_month_start = rec["day_bs"] == 1
+    if is_month_start:
+        en = f"{rec['month_name_en']} {rec['year_bs']}"
+        np = f"{rec['month_name_np']} {to_devanagari_numerals(rec['year_bs'])}"
+    else:
+        en = str(rec["day_bs"])
+        np = to_devanagari_numerals(rec["day_bs"])
     if lang == "en":
         return en
     if lang == "np":
