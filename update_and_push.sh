@@ -6,7 +6,7 @@
 # returns HTTP 403 for GitHub Actions' IP range (confirmed 2026-08-21).
 set -euo pipefail
 
-REPO_DIR="/Users/rakesh/Desktop/Calendar"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON3="/Library/Frameworks/Python.framework/Versions/3.13/bin/python3"
 GIT="/usr/bin/git"
 
